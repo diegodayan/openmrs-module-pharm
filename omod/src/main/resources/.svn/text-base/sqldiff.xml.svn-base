@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqldiff PUBLIC "-//OpenMRS//DTD OpenMRS SQL Diff Config 1.0//EN" "http://resources.openmrs.org/doctype/sqldiff-1.0.dtd">
+
+<sqldiff version="1.0">
+	<help></help>
+	
+	<!-- This entry is run at module startup.  If the global property called "patientnotes.database_version" in the database
+	     doesn't exist or is less than 0.1, then this "diff" is run.  If the value of that GP is greater than or equal to 0.1, 
+	     then this won't be run.  Immediately after running this diff, openmrs sets the patientnotes.database_version GP to 0.1  -->
+	<diff>
+		<version>0.1</version>
+		<author>djazayeri</author>
+		<date>Feb 11 2010</date>
+		<description>
+			Create the patientnotes_note table
+		</description>
+		<sql>
+			CREATE TABLE patientnotes_note (
+			  id int(11) NOT NULL AUTO_INCREMENT,
+			  uuid varchar(38) NOT NULL,
+			  patient int(11) NOT NULL,
+			  title varchar(100),
+			  text varchar(1000) NOT NULL,
+			  creator int(11) NOT NULL,
+			  date_created datetime NOT NULL,
+			  PRIMARY KEY (id),
+			  KEY `user_who_created_patient_notes_note` (`creator`),
+			  CONSTRAINT patientnotes_note_creator FOREIGN KEY (creator) REFERENCES person (person_id)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+		</sql>
+	</diff>
+	
+</sqldiff>

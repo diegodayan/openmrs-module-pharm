@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="@MODULE_PACKAGE@">
+
+	<class name="HelloWorldResponse" table="hello_world_response">
+
+		<id name="helloWorldResponseId" type="int" column="hello_world_response_id">
+			<generator class="native" />
+		</id>
+
+		<property name="retired" type="boolean" column="retired"
+			length="1" not-null="true" />
+		<property name="response" type="java.lang.String" column="response"
+			not-null="true" length="50" />
+
+	</class>
+	
+</hibernate-mapping>

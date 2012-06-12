@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/25301/openmrs-modules/basicmodule/trunk/api/src/main/resources
+END
+messages.properties
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/!svn/ver/25301/openmrs-modules/basicmodule/trunk/api/src/main/resources/messages.properties
+END
+messages_es.properties
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/!svn/ver/25301/openmrs-modules/basicmodule/trunk/api/src/main/resources/messages_es.properties
+END
+messages_fr.properties
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/!svn/ver/25301/openmrs-modules/basicmodule/trunk/api/src/main/resources/messages_fr.properties
+END
+liquibase.xml
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/25299/openmrs-modules/basicmodule/trunk/api/src/main/resources/liquibase.xml
+END
+moduleApplicationContext.xml
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/!svn/ver/25299/openmrs-modules/basicmodule/trunk/api/src/main/resources/moduleApplicationContext.xml
+END

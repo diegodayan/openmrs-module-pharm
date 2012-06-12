@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/18101/openmrs-modules/basicmodule/trunk/omod/src/test/resources
+END
+TestingApplicationContext.xml
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/!svn/ver/18101/openmrs-modules/basicmodule/trunk/omod/src/test/resources/TestingApplicationContext.xml
+END
+test-hibernate.cfg.xml
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/!svn/ver/18101/openmrs-modules/basicmodule/trunk/omod/src/test/resources/test-hibernate.cfg.xml
+END

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+  		    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+  		    http://www.springframework.org/schema/context
+  		    http://www.springframework.org/schema/context/spring-context-3.0.xsd
+  		    http://www.springframework.org/schema/jee
+  		    http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+  		    http://www.springframework.org/schema/tx
+  		    http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+  		    http://www.springframework.org/schema/aop
+  		    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+  		    http://www.springframework.org/schema/util
+  		    http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+    <!-- Add here beans related to the web context -->
+    <bean id="basicModuleTabUrlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="order">
+            <value>50</value>
+        </property>   <!-- this will ensure the mapping is loaded before mappings from core
+         we are replacing the core jsp with ours; this is used to replace patient dashboard regimen tab with our tab -->
+        <property name="mappings">           
+            <props>
+                <prop key="**/patientExample.portlet">portletController</prop>    
+                <!-- Following is new change -->
+                <prop key="**/patientNotes.portlet">MyPatientNotesPortletController</prop>                              
+                <!-- The following property is used to override the regimen tab because the key is
+                    the same as the url mapping for regimen portlet in core -->
+                <prop key="**/patientRegimen.portlet">myPatientRegimensPortletController</prop>
+                <prop key="**/patientPharmDrugs.portlet">MyPatientPharmDrugsPortletController</prop>                              
+            </props>
+        </property>
+    </bean>
+    <bean id="myPatientRegimensPortletController" class="org.openmrs.module.pharm.web.controller.PatientRegimensPortletController" />    
+    <!-- I added the following bean -->
+    <bean id="MyPatientNotesPortletController" class="org.openmrs.module.pharm.web.controller.PatientNotesPortletController" />
+    <!-- Diego Dayan added the following bean -->
+    <bean id="MyPatientPharmDrugsPortletController" class="org.openmrs.module.pharm.web.controller.PatientPharmDrugsPortletController" /> 
+    <!-- Annotation based controllers -->
+    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>	
+    <context:component-scan base-package="org.openmrs.module.pharm.web.controller" /> 		
+</beans>

@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/25298/openmrs-modules/basicmodule/trunk/omod/src/main/resources
+END
+config.xml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/25298/openmrs-modules/basicmodule/trunk/omod/src/main/resources/config.xml
+END
+webModuleApplicationContext.xml
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/!svn/ver/25298/openmrs-modules/basicmodule/trunk/omod/src/main/resources/webModuleApplicationContext.xml
+END

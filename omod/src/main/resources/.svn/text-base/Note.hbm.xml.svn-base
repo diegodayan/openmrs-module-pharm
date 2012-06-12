@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<!-- This is the hibernate mapping file for our Note.java object.  This maps the object properties to the db columns. -->
+
+<!-- THIS FILE MUST BE REFERENCED FROM config.xml AS WELL -->
+
+<!-- See the /metadata/sqldiff.xml file for creating the table in the users database on startup -->
+
+<hibernate-mapping package="org.openmrs.module.patientnotes">
+
+	<class name="Note" table="patientnotes_note">
+
+		<id name="id" type="int" column="id" unsaved-value="0">
+			<generator class="native" />
+		</id>
+		
+		<property name="uuid" type="java.lang.String" column="uuid" not-null="true" length="38" />
+		
+		<property name="title" type="java.lang.String" column="title" not-null="false" length="100" />
+
+		<property name="text" type="java.lang.String" column="text" not-null="true" length="1000" />
+	
+		<many-to-one column="patient" name="patient" class="org.openmrs.Patient" not-null="true" />
+		
+		<property name="dateCreated" type="java.util.Date"
+			column="date_created" not-null="true" length="19" />
+
+		<many-to-one name="creator" class="org.openmrs.User" not-null="true" />
+		
+	</class>
+
+</hibernate-mapping>

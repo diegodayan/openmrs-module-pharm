@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<!-- This is a normal spring application context file -->
+
+<!-- There is a webModuleApplicationContext.xml file that has web-specific spring setup in this same folder -->
+
+<beans>
+	<!-- This bean calls ServiceContext.setModuleService() with our NoteService class -->
+	<!-- This makes it possible to call Context.getService(NoteService.class).saveNote(note);... -->
+	<bean parent="serviceContext">
+		<property name="moduleService">
+			<list>
+				<!-- service interface name.  this is the "key" to look up our service in Context.getService() -->
+				<value>org.openmrs.module.patientnotes.NoteService</value> 
+				<bean class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+					<property name="transactionManager"><ref bean="transactionManager"/></property>
+					<property name="target">
+						<!-- This is our service class implementation that actually does the business logic -->
+						<bean class="org.openmrs.module.patientnotes.impl.NoteServiceImpl">
+						
+							<!-- this calls noteServiceImpl.setDao(new HibernateNoteDAO) -->
+							<property name="dao">
+								<bean class="org.openmrs.module.patientnotes.db.hibernate.HibernateNoteDAO">
+								
+									<!-- the "sessionFactory" object is provided by the applicationContext-service.xml file in core openmrs -->
+									<property name="sessionFactory"><ref bean="sessionFactory"/></property>	
+								</bean>
+							</property>	
+						</bean>
+					</property>
+					
+					<property name="preInterceptors">
+						<!-- This is a list of AOP advice that wraps around each of the methods in our NoteServiceImpl -->
+						<ref bean="serviceInterceptors"/>
+					</property>
+					<property name="transactionAttributeSource">
+						<bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+</beans>

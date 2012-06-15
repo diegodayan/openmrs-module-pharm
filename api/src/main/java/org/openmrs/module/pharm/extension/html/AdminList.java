@@ -36,7 +36,7 @@ public class AdminList extends AdministrationSectionExt {
      * @see org.openmrs.module.web.extension.AdministrationSectionExt#getTitle()
      */
     public String getTitle() {
-        return "Favorite Patients";
+        return "Pharm Module";
     }
 
     /**
@@ -45,7 +45,8 @@ public class AdminList extends AdministrationSectionExt {
     public Map<String, String> getLinks() {
         Map<String, String> map = new HashMap<String, String>();
         map.put("module/pharm/pharmLink.form", "Patients in System");
-        map.put("module/pharm/pharmacyLandingPage.form", "Pharmacy Landing Page");
+        map.put("module/pharm/pharmacyLandingPage.form", "Pharm Landing Page");
+        map.put("module/pharm/pharmTestPage.form", "Pharm Test Page");
         return map;
     }
 }

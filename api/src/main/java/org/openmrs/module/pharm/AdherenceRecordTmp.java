@@ -1,20 +1,22 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.openmrs.module.pharm;
 
 import java.util.Date;
 
+// CREATE TABLE `pharm_adherencerecordtmp` (
+//   `id` int(4) NOT NULL AUTO_INCREMENT,
+//   `adherencereason` varchar(255) DEFAULT NULL,
+//   `countdate` datetime DEFAULT NULL,
+//   `dayscarriedover` int(11) DEFAULT NULL,
+//   `daysinhand` int(11) DEFAULT NULL,
+//   `dayssincevisit` int(11) DEFAULT NULL,
+//   `dayssupplied` int(11) DEFAULT NULL,
+//   `pawcno` varchar(255) DEFAULT NULL,
+//   `pillcountid` int(11) DEFAULT NULL,
+//   `cluser` varchar(255) DEFAULT NULL,
+//   `invalid` tinyint(1) DEFAULT NULL,
+//   PRIMARY KEY (`id`)
+// ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8$$
 /**
- * CREATE TABLE `pharm_adherencerecordtmp` ( `id` int(4) NOT NULL
- * AUTO_INCREMENT, `adherencereason` varchar(255) DEFAULT NULL, `countdate`
- * datetime DEFAULT NULL, `dayscarriedover` int(11) DEFAULT NULL, `daysinhand`
- * int(11) DEFAULT NULL, `dayssincevisit` int(11) DEFAULT NULL, `dayssupplied`
- * int(11) DEFAULT NULL, `pawcno` varchar(255) DEFAULT NULL, `pillcountid`
- * int(11) DEFAULT NULL, `cluser` varchar(255) DEFAULT NULL, `invalid`
- * tinyint(1) DEFAULT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB DEFAULT
- * CHARSET=utf8;
  *
  * @author Diego Dayan
  */

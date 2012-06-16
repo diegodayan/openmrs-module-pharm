@@ -1,13 +1,9 @@
 package org.openmrs.module.pharm.db.hibernate;
 
-import java.util.List;
-import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
-import org.openmrs.Patient;
-import org.openmrs.module.pharm.Note;
-import org.openmrs.module.pharm.NoteService;
-import org.openmrs.module.pharm.db.NoteDAO;
+import org.openmrs.module.pharm.AccumulatedDrug;
+import org.openmrs.module.pharm.AccumulatedDrugService;
+import org.openmrs.module.pharm.db.AccumulatedDrugDAO;
 
 /**
  * This class should not be called directly. Instead, the {@link NoteService}
@@ -19,7 +15,7 @@ import org.openmrs.module.pharm.db.NoteDAO;
  * </code>
  *
  */
-public class HibernateNoteDAO implements NoteDAO {
+public class HibernateAccumulatedDrugDAO implements AccumulatedDrugDAO {
 
     private SessionFactory sessionFactory;
 
@@ -38,26 +34,12 @@ public class HibernateNoteDAO implements NoteDAO {
         this.sessionFactory = sessionFactory;
     }
 
-    public Note getNote(Integer id) {
-        return (Note) sessionFactory.getCurrentSession().get(Note.class, id);
+    public AccumulatedDrug getAccumulatedDrug(Integer id) {
+        return (AccumulatedDrug) sessionFactory.getCurrentSession().get(AccumulatedDrug.class, id);
     }
 
-    public Note getNoteByUuid(String uuid) {
-        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
-                Note.class);
-        crit.add(Restrictions.eq("uuid", uuid));
-        return (Note) crit.uniqueResult();
-    }
-
-    public List<Note> getNotes(Patient patient) {
-        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
-                Note.class);
-        crit.add(Restrictions.eq("patient", patient));
-        return crit.list();
-    }
-
-    public Note saveNote(Note note) {
-        sessionFactory.getCurrentSession().saveOrUpdate(note);
-        return note;
+    public AccumulatedDrug saveAccumulatedDrug(AccumulatedDrug ad) {
+        sessionFactory.getCurrentSession().saveOrUpdate(ad);
+        return ad;
     }
 }

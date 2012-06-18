@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<!-- This is the hibernate mapping file for our Note.java object.  This maps the object properties to the db columns. -->
+<!-- THIS FILE MUST BE REFERENCED FROM config.xml AS WELL -->
+<!-- See the /metadata/sqldiff.xml file for creating the table in the users database on startup -->
+<hibernate-mapping package="org.openmrs.module.pharm">
+    <!--
+    CREATE TABLE `pharm_prescription` (
+        `id` int(11) NOT NULL,
+        `clinicalstage` int(11) DEFAULT NULL,
+        `current` char(1) DEFAULT NULL,
+        `date` datetime DEFAULT NULL,
+        `doctor` int(11) DEFAULT NULL,
+        `duration` int(11) DEFAULT NULL,
+        `modified` char(1) DEFAULT NULL,
+        `patient` int(11) NOT NULL,
+        `prescriptionid` varchar(255) DEFAULT NULL,
+        `weight` double DEFAULT NULL,
+        `reasonforupdate` varchar(255) DEFAULT NULL,
+        `notes` varchar(255) DEFAULT NULL,
+        `enddate` datetime DEFAULT NULL,
+        `drugtypes` varchar(20) DEFAULT NULL,
+        PRIMARY KEY (`id`),
+        KEY `pharm_prescription_doctor` (`doctor`),
+        KEY `pharm_prescription_patient` (`patient`),
+        CONSTRAINT `pharm_prescription_doctor` FOREIGN KEY (`doctor`) REFERENCES `pharm_doctor` (`id`),
+        CONSTRAINT `pharm_prescription_patient` FOREIGN KEY (`patient`) REFERENCES `pharm_patient` (`id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8    
+    -->
+    <class name="Prescription" table="pharm_prescription">
+        <id name="id" type="int" column="id" unsaved-value="0">
+            <generator class="native" />
+        </id>		
+        <property name="notes" type="java.lang.String" column="notes" not-null="true" length="1000" />	
+        <property name="date" type="java.util.Date"
+                  column="date" not-null="true" length="19" />
+        <property name="endDate" type="java.util.Date"
+                  column="enddate" not-null="true" length="19" />
+        <many-to-one column="patient" name="patient" class="org.openmrs.Patient" not-null="true" />
+    </class>
+</hibernate-mapping>

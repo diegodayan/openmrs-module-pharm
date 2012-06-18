@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<!-- This is the hibernate mapping file for our Note.java object.  This maps the object properties to the db columns. -->
+<!-- THIS FILE MUST BE REFERENCED FROM config.xml AS WELL -->
+<!-- See the /metadata/sqldiff.xml file for creating the table in the users database on startup -->
+<hibernate-mapping package="org.openmrs.module.pharm">
+    <!--
+    <class name="Alert" table="pharm_alerts"></class>    
+    <class name="AlternatePatientIdentifier" table="pharm_alternatepatientidentifier"></class>    
+    <class name="Appointment" table="pharm_alerts"></class>    
+    <class name="AtcCode" table="pharm_atccode"></class>    
+    <class name="AtcCodeChemicalCompound" table="pharm_atccode_chemicalcompound"></class>    
+    <class name="AttributeType" table="pharm_attributetype"></class>    
+    <class name="Campaign" table="pharm_campaign"></class>    
+    <class name="CampaignParticipant" table="pharm_campaign_participant"></class>    
+    <class name="ChemicalCompound" table="pharm_chemicalcompound"></class>    
+    <class name="ChemicalDrugStrength" table="pharm_chemicaldrugstrength"></class>    
+    <class name="Clinic" table="pharm_clinic"></class>    
+    <class name="ClinicUser" table="pharm_clinicuser"></class>    
+    -->
+</hibernate-mapping>

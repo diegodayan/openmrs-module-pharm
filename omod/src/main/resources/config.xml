@@ -40,7 +40,12 @@
         You should put them separated by spaces, like:
         <mappingFiles>Class1.hbm.xml Class2.hbm.xml ClassN.hbm.xml</mappingFiles>
     -->
-    <mappingFiles>Note.hbm.xml PharmDrug.hbm.xml</mappingFiles>	
+    <mappingFiles>
+        Note.hbm.xml
+        PharmDrug.hbm.xml        
+        iDart.hbm.xml
+        AdherenceRecordTmp.hbm.xml        
+    </mappingFiles>	
         
     <!-- These properties will end up in the database
         In the table global_property

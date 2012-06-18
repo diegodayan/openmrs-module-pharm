@@ -2,20 +2,16 @@ package org.openmrs.module.pharm.db;
 
 import java.util.List;
 import org.openmrs.Patient;
-import org.openmrs.module.pharm.Note;
-import org.openmrs.module.pharm.NoteService;
+import org.openmrs.module.pharm.ClinicUser;
+import org.openmrs.module.pharm.ClinicUserService;
 
 /**
  * This is the DAO interface. This is never used by the developer, but instead
  * the {@link NoteService} calls it (and developers call the NoteService)
  */
-public interface NoteDAO {
+public interface ClinicUserDAO {
 
-    Note getNote(Integer id);
+    ClinicUser getClinicUser(Integer id);
 
-    Note getNoteByUuid(String uuid);
-
-    List<Note> getNotes(Patient patient);
-
-    Note saveNote(Note note);
+    ClinicUser saveClinicUser(ClinicUser clinicUser);
 }

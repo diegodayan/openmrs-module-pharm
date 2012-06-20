@@ -34,6 +34,10 @@
         <point>org.openmrs.patientDashboardTab</point>
         <class>${project.parent.groupId}.${project.parent.artifactId}.extension.html.PatientPharmDrugsDashboardTabExt</class>
     </extension>
+    <extension>
+        <point>org.openmrs.patientDashboardTab</point>
+        <class>${project.parent.groupId}.${project.parent.artifactId}.extension.html.PatientPrescriptionsDashboardTabExt</class>
+    </extension>        
     <!-- End of extensions added by Diego Dayan -->
 
     <!-- The hibernate mapping file stored in /metadata/Note.hbm.xml and in the omod when packaged        
@@ -45,6 +49,7 @@
         PharmDrug.hbm.xml        
         iDart.hbm.xml
         AdherenceRecordTmp.hbm.xml        
+        Prescription.hbm.xml        
     </mappingFiles>	
         
     <!-- These properties will end up in the database
@@ -112,11 +117,19 @@
                 <include method="deletePharmDrugById"/>
                 <include method="createPharmDrugForPatient"/>
             </create> 
+            <create creator="new" javascript="DWRPrescriptionService">
+                <param name="class" value="org.openmrs.module.pharm.web.controller.DWRPrescriptionService"/>
+                <include method="getPrescriptionsForPatient"/>
+            </create>
+            
                 <!-- The following conversion tells spring to generate javascript to be able to
                     save and retrieve PharmDrug objects from the jsp page
                     See http://directwebremoting.org/dwr/documentation/server/configuration/dwrxml/converters/bean.html
                     -->
             <convert converter="bean" match="org.openmrs.module.pharm.PharmDrug">
+                <param name="exclude" value="patient"/>
+            </convert>          
+            <convert converter="bean" match="org.openmrs.module.pharm.Prescription">
                 <param name="exclude" value="patient"/>
             </convert>          
             <create creator="new" javascript="DWRFindPatientBL">
@@ -137,6 +150,11 @@
 			<![CDATA[
 			import ${project.parent.groupId}.${project.parent.artifactId}.web.DWRMyPharmDrugsService;
 			DWRMyPharmDrugsService.getPharmDrugsForPatient(String patientName);
+			]]>
+                        
+			<![CDATA[
+			import ${project.parent.groupId}.${project.parent.artifactId}.web.DWRPrescriptionService;
+			DWRPrescriptionService.getPrescriptionsForPatient(String patientName);
 			]]>
                         
 			<![CDATA[

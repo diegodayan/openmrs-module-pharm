@@ -34,6 +34,7 @@
                     the same as the url mapping for regimen portlet in core -->
                 <prop key="**/patientRegimen.portlet">myPatientRegimensPortletController</prop>
                 <prop key="**/patientPharmDrugs.portlet">MyPatientPharmDrugsPortletController</prop>                              
+                <prop key="**/patientPrescriptions.portlet">PatientPrescriptionsController</prop>                              
             </props>
         </property>
     </bean>
@@ -42,6 +43,7 @@
     <bean id="MyPatientNotesPortletController" class="org.openmrs.module.pharm.web.controller.PatientNotesPortletController" />
     <!-- Diego Dayan added the following bean -->
     <bean id="MyPatientPharmDrugsPortletController" class="org.openmrs.module.pharm.web.controller.PatientPharmDrugsPortletController" /> 
+    <bean id="PatientPrescriptionsController" class="org.openmrs.module.pharm.web.controller.PatientPrescriptionsPortletController" /> 
     <!-- Annotation based controllers -->
     <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>	
     <context:component-scan base-package="org.openmrs.module.pharm.web.controller" /> 		

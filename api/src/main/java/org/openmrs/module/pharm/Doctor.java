@@ -46,7 +46,7 @@ public class Doctor extends BaseOpenmrsData {
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
     }
-    
+
     public String getFirstName() {
         return firstName;
     }
@@ -54,7 +54,7 @@ public class Doctor extends BaseOpenmrsData {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-    
+
     public String getLastName() {
         return lastName;
     }

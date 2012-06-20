@@ -11,13 +11,6 @@ import org.openmrs.BaseOpenmrsData;
 //   `void` tinyint(1) DEFAULT NULL,
 //   PRIMARY KEY (`id`)
 // ) ENGINE=InnoDB DEFAULT CHARSET=utf8
-/**
- * The object that represents one row in our patientnotes table. This object is
- * used to get data out and to put data into the database via the
- * {@link NoteService} class. <br/> <br/> See the /metadata/Note.hbm.xml file
- * for the mapping from this file to the database table. <br/> <br/>
- *
- */
 public class Alert extends BaseOpenmrsData {
 
     private Integer id;

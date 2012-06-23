@@ -1,7 +1,6 @@
 package org.openmrs.module.pharm.db;
 
 import java.util.List;
-
 import org.openmrs.Patient;
 import org.openmrs.module.pharm.Note;
 import org.openmrs.module.pharm.NoteService;
@@ -12,12 +11,11 @@ import org.openmrs.module.pharm.NoteService;
  */
 public interface NoteDAO {
 
-	Note getNote(Integer id);
+    Note getNote(Integer id);
 
-	Note getNoteByUuid(String uuid);
+    Note getNoteByUuid(String uuid);
 
-	List<Note> getNotes(Patient patient);
+    List<Note> getNotes(Patient patient);
 
-	Note saveNote(Note note);
-
+    Note saveNote(Note note);
 }

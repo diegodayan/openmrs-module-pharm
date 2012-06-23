@@ -48,4 +48,657 @@
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         </sql>
     </diff>
+    <diff>
+        <version>0.3</version>
+        <author>diegodayan</author>
+        <date>Jun 13 2012</date>
+        <description>Create all the iDart tables</description>
+        <sql>
+            CREATE TABLE `pharm_adherencerecordtmp` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `adherencereason` varchar(255) DEFAULT NULL,
+            `countdate` datetime DEFAULT NULL,
+            `dayscarriedover` int(11) DEFAULT NULL,
+            `daysinhand` int(11) DEFAULT NULL,
+            `dayssincevisit` int(11) DEFAULT NULL,
+            `dayssupplied` int(11) DEFAULT NULL,
+            `pawcno` varchar(255) DEFAULT NULL,
+            `pillcountid` int(11) DEFAULT NULL,
+            `cluser` varchar(255) DEFAULT NULL,
+            `invalid` tinyint(1) DEFAULT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_alerts` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `alertmessage` varchar(255) NOT NULL,
+            `alerttype` varchar(255) NOT NULL,
+            `alertdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            `void` tinyint(1) DEFAULT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_atccode` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `name` varchar(255) NOT NULL,
+            `code` varchar(255) NOT NULL,
+            `mims` varchar(255) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            UNIQUE KEY `pharm_name` (`name`),
+            UNIQUE KEY `pharm_code` (`code`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_attributetype` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `datatype` varchar(255) DEFAULT NULL,
+            `description` varchar(255) DEFAULT NULL,
+            `name` varchar(255) DEFAULT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_campaign` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `description` varchar(255) DEFAULT NULL,
+            `duration` int(11) DEFAULT NULL,
+            `name` varchar(35) NOT NULL DEFAULT '',
+            `startdate` datetime DEFAULT NULL,
+            `status` varchar(20) NOT NULL DEFAULT '',
+            `timesperday` int(11) DEFAULT NULL,
+            `type` varchar(20) NOT NULL DEFAULT '',
+            `version` bigint(20) NOT NULL,
+            `mobilisrid` bigint(20) DEFAULT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_campaign_participant` (
+            `campaign_id` int(11) NOT NULL DEFAULT '0',
+            `patient_id` int(11) NOT NULL DEFAULT '0',
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            PRIMARY KEY (`id`),
+            KEY `pharm_campaign_participant_patient_fk` (`patient_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_chemicalcompound` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `name` varchar(255) NOT NULL,
+            `acronym` varchar(255) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            UNIQUE KEY `pharm_name` (`name`),
+            UNIQUE KEY `pharm_acronym` (`acronym`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_clinicuser` (
+            `clinicid` int(11) NOT NULL,
+            `userid` int(11) NOT NULL,
+            PRIMARY KEY (`userid`,`clinicid`),
+            UNIQUE KEY `pharm_unique_clinicuser` (`userid`,`clinicid`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_databasechangelog` (
+            `ID` varchar(63) NOT NULL,
+            `AUTHOR` varchar(63) NOT NULL,
+            `FILENAME` varchar(200) NOT NULL,
+            `DATEEXECUTED` datetime NOT NULL,
+            `ORDEREXECUTED` int(11) NOT NULL,
+            `EXECTYPE` varchar(10) NOT NULL,
+            `MD5SUM` varchar(35) DEFAULT NULL,
+            `DESCRIPTION` varchar(255) DEFAULT NULL,
+            `COMMENTS` varchar(255) DEFAULT NULL,
+            `TAG` varchar(255) DEFAULT NULL,
+            `LIQUIBASE` varchar(20) DEFAULT NULL,
+            PRIMARY KEY (`ID`,`AUTHOR`,`FILENAME`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_databasechangeloglock` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `LOCKED` tinyint(1) NOT NULL,
+            `LOCKGRANTED` datetime DEFAULT NULL,
+            `LOCKEDBY` varchar(255) DEFAULT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_deleteditem` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `deleteditemid` int(11) DEFAULT NULL,
+            `itemtype` varchar(255) DEFAULT NULL,
+            `invalid` tinyint(1) DEFAULT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_doctor` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `emailaddress` varchar(255) DEFAULT NULL,
+            `firstname` varchar(255) DEFAULT NULL,
+            `lastname` varchar(255) DEFAULT NULL,
+            `mobileno` varchar(255) DEFAULT NULL,
+            `modified` char(1) DEFAULT NULL,
+            `telephoneno` varchar(255) DEFAULT NULL,
+            `active` tinyint(1) DEFAULT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_form` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `form` varchar(255) DEFAULT NULL,
+            `actionlanguage1` varchar(255) DEFAULT NULL,
+            `actionlanguage2` varchar(255) DEFAULT NULL,
+            `actionlanguage3` varchar(255) DEFAULT NULL,
+            `formlanguage1` varchar(255) DEFAULT NULL,
+            `formlanguage2` varchar(255) DEFAULT NULL,
+            `formlanguage3` varchar(255) DEFAULT NULL,
+            `dispinstructions1` varchar(255) DEFAULT NULL,
+            `dispinstructions2` varchar(255) DEFAULT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_identifiertype` (
+            `id` int(11) NOT NULL,
+            `name` varchar(255) NOT NULL,
+            `index` int(11) DEFAULT NULL,
+            `voided` tinyint(1) NOT NULL DEFAULT '0',
+            PRIMARY KEY (`id`),
+            UNIQUE KEY `pharm_name` (`name`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_logging` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `itemid` varchar(255) DEFAULT NULL,
+            `modified` char(1) DEFAULT NULL,
+            `transactiondate` datetime DEFAULT NULL,
+            `transactiontype` varchar(255) DEFAULT NULL,
+            `idart_user` int(11) NOT NULL,
+            `message` varchar(255) DEFAULT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_messageschedule` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `description` varchar(255) DEFAULT NULL,
+            `messagetype` varchar(255) NOT NULL,
+            `scheduledate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            `daystoschedule` int(11) DEFAULT NULL,
+            `scheduledsuccessfully` tinyint(1) DEFAULT '1',
+            `senttoalerts` tinyint(1) DEFAULT '0',
+            `messagenumber` int(11) DEFAULT NULL,
+            `language` varchar(50) DEFAULT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_nationalclinics` (
+            `id` int(11) NOT NULL,
+            `province` varchar(255) NOT NULL,
+            `district` varchar(255) NOT NULL,
+            `subdistrict` varchar(255) NOT NULL,
+            `facilityname` varchar(255) NOT NULL,
+            `facilitytype` varchar(255) NOT NULL,
+            PRIMARY KEY (`id`),
+            UNIQUE KEY `pharm_unique_facilities` (`facilityname`,`subdistrict`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_patientstatistic` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `entry_id` int(11) DEFAULT NULL,
+            `patient_id` int(11) DEFAULT NULL,
+            `datetested` date DEFAULT NULL,
+            `daterecorded` date DEFAULT NULL,
+            `patientstattype_id` int(11) DEFAULT NULL,
+            `statnumeric` double DEFAULT NULL,
+            `stattext` varchar(255) DEFAULT NULL,
+            `statdate` date DEFAULT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_patientstattypes` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `statname` varchar(30) DEFAULT NULL,
+            `statformat` varchar(1) DEFAULT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_patientvisit` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `patient_id` int(11) DEFAULT NULL,
+            `dateofvisit` date DEFAULT NULL,
+            `isscheduled` varchar(1) DEFAULT NULL,
+            `patientvisitreason_id` int(11) DEFAULT NULL,
+            `diagnosis` varchar(255) DEFAULT NULL,
+            `notes` varchar(255) DEFAULT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_patientvisitreason` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `reasonforvisit` varchar(50) DEFAULT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_regimen` (
+            `id` int(11) NOT NULL,
+            `modified` char(1) DEFAULT NULL,
+            `notes` varchar(255) DEFAULT NULL,
+            `regimenname` varchar(255) DEFAULT NULL,
+            `druggroup` varchar(255) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            UNIQUE KEY `pharm_unique_regimen` (`regimenname`,`druggroup`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_sequence_data` (
+            `sequence_name` varchar(100) NOT NULL,
+            `sequence_increment` int(11) unsigned NOT NULL DEFAULT '1',
+            `sequence_min_value` int(11) unsigned NOT NULL DEFAULT '1',
+            `sequence_max_value` bigint(20) unsigned NOT NULL DEFAULT '18446744073709551615',
+            `sequence_cur_value` bigint(20) unsigned DEFAULT '1',
+            `sequence_cycle` tinyint(1) NOT NULL DEFAULT '0',
+            PRIMARY KEY (`sequence_name`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_simpledomain` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `description` varchar(255) DEFAULT NULL,
+            `name` varchar(255) DEFAULT NULL,
+            `value` varchar(255) DEFAULT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_stockcenter` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `stockcentername` varchar(255) DEFAULT NULL,
+            `preferred` tinyint(1) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            UNIQUE KEY `pharm_unique_stockcentername` (`stockcentername`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_stocktake` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `enddate` datetime DEFAULT NULL,
+            `startdate` datetime DEFAULT NULL,
+            `stocktakenumber` varchar(255) DEFAULT NULL,
+            `open` tinyint(1) DEFAULT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_study` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `studyname` varchar(255) NOT NULL,
+            PRIMARY KEY (`id`),
+            UNIQUE KEY `pharm_studyname` (`studyname`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_users` (
+            `id` int(11) NOT NULL,
+            `modified` char(1) DEFAULT NULL,
+            `cl_password` varchar(255) DEFAULT NULL,
+            `role` varchar(255) DEFAULT NULL,
+            `cl_username` varchar(255) DEFAULT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_atccode_chemicalcompound` (
+            `atccode_id` int(11) NOT NULL,
+            `chemicalcompound_id` int(11) NOT NULL,
+            KEY `pharm_fk_atccode_chemicalcompound` (`atccode_id`),
+            KEY `pharm_fk_chemicalcompound_atccode` (`chemicalcompound_id`),
+            CONSTRAINT `pharm_fk_chemicalcompound_atccode` FOREIGN KEY (`chemicalcompound_id`) REFERENCES `pharm_chemicalcompound` (`id`),
+            CONSTRAINT `pharm_fk_atccode_chemicalcompound` FOREIGN KEY (`atccode_id`) REFERENCES `pharm_atccode` (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_clinic` (
+            `id` int(11) NOT NULL,
+            `notes` varchar(255) DEFAULT NULL,
+            `telephone` varchar(255) DEFAULT NULL,
+            `mainclinic` tinyint(1) DEFAULT NULL,
+            `clinicname` varchar(255) DEFAULT NULL,
+            `clinicdetails_id` int(11) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            UNIQUE KEY `pharm_unique_clinicname` (`clinicname`),
+            KEY `pharm_fkey_clinic_details` (`clinicdetails_id`),
+            CONSTRAINT `pharm_fkey_clinic_details` FOREIGN KEY (`clinicdetails_id`) REFERENCES `pharm_nationalclinics` (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_drug` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `form` int(11) NOT NULL,
+            `dispensinginstructions1` varchar(255) DEFAULT NULL,
+            `dispensinginstructions2` varchar(255) DEFAULT NULL,
+            `modified` char(1) DEFAULT NULL,
+            `name` varchar(255) DEFAULT NULL,
+            `packsize` int(11) DEFAULT NULL,
+            `sidetreatment` char(1) DEFAULT NULL,
+            `defaultamnt` double DEFAULT NULL,
+            `defaulttimes` int(11) DEFAULT NULL,
+            `stockcode` varchar(50) DEFAULT NULL,
+            `atccode_id` int(11) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `pharm_drug_form` (`form`),
+            KEY `pharm_fk_drug_atccode` (`atccode_id`),
+            CONSTRAINT `pharm_drug_form` FOREIGN KEY (`form`) REFERENCES `pharm_form` (`id`),
+            CONSTRAINT `pharm_fk_drug_atccode` FOREIGN KEY (`atccode_id`) REFERENCES `pharm_atccode` (`id`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_stockadjustment` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `capturedate` datetime DEFAULT NULL,
+            `stock` int(11) NOT NULL,
+            `notes` varchar(255) DEFAULT NULL,
+            `stocktake` int(11) DEFAULT NULL,
+            `stockcount` int(11) DEFAULT NULL,
+            `adjustedvalue` int(11) DEFAULT NULL,
+            `finalised` tinyint(1) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `pharm_stocktake_fkey` (`stocktake`),
+            CONSTRAINT `pharm_stocktake_fkey` FOREIGN KEY (`stocktake`) REFERENCES `pharm_stocktake` (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_chemicaldrugstrength` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `chemicalcompound` int(11) NOT NULL,
+            `strength` int(11) DEFAULT NULL,
+            `drug` int(11) NOT NULL,
+            PRIMARY KEY (`id`),
+            KEY `pharm_chemicalcompound_fkey` (`chemicalcompound`),
+            KEY `pharm_drug_fkey1` (`drug`),
+            CONSTRAINT `pharm_chemicalcompound_fkey` FOREIGN KEY (`chemicalcompound`) REFERENCES `pharm_chemicalcompound` (`id`),
+            CONSTRAINT `pharm_drug_fkey1` FOREIGN KEY (`drug`) REFERENCES `pharm_drug` (`id`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_package` (
+            `id` int(11) NOT NULL,
+            `dateleft` datetime DEFAULT NULL,
+            `datereceived` datetime DEFAULT NULL,
+            `modified` char(1) DEFAULT NULL,
+            `packageid` varchar(255) DEFAULT NULL,
+            `packdate` datetime DEFAULT NULL,
+            `pickupdate` datetime DEFAULT NULL,
+            `prescription` int(11) DEFAULT NULL,
+            `weekssupply` int(11) DEFAULT NULL,
+            `datereturned` datetime DEFAULT NULL,
+            `stockreturned` tinyint(1) DEFAULT NULL,
+            `packagereturned` tinyint(1) DEFAULT NULL,
+            `reasonforpackagereturn` varchar(255) DEFAULT NULL,
+            `clinic` int(11) DEFAULT NULL,
+            `drugtypes` varchar(20) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `pharm_package_clinic_fkey` (`clinic`),
+            CONSTRAINT `pharm_package_clinic_fkey` FOREIGN KEY (`clinic`) REFERENCES `pharm_clinic` (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_regimendrugs` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `amtpertime` double DEFAULT NULL,
+            `drug` int(11) DEFAULT NULL,
+            `modified` char(1) DEFAULT NULL,
+            `regimen` int(11) DEFAULT NULL,
+            `timesperday` int(11) DEFAULT NULL,
+            `notes` varchar(255) DEFAULT NULL,
+            `regimendrugsindex` int(11) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            UNIQUE KEY `pharm_unique_regimendrug` (`regimen`,`drug`),
+            KEY `pharm_drug_fkey0` (`drug`),
+            CONSTRAINT `pharm_drug_fkey0` FOREIGN KEY (`drug`) REFERENCES `pharm_drug` (`id`),
+            CONSTRAINT `pharm_regimen_fkey` FOREIGN KEY (`regimen`) REFERENCES `pharm_regimen` (`id`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_stock` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `drug` int(11) NOT NULL,
+            `batchnumber` varchar(255) DEFAULT NULL,
+            `datereceived` datetime DEFAULT NULL,
+            `stockcenter` int(11) NOT NULL,
+            `expirydate` datetime DEFAULT NULL,
+            `modified` char(1) DEFAULT NULL,
+            `shelfnumber` varchar(255) DEFAULT NULL,
+            `unitsreceived` int(11) DEFAULT NULL,
+            `manufacturer` varchar(255) DEFAULT NULL,
+            `hasunitsremaining` char(1) DEFAULT NULL,
+            `unitprice` decimal(10,2) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `pharm_stock_drug` (`drug`),
+            KEY `pharm_stock_stockcenter_fkey` (`stockcenter`),
+            CONSTRAINT `pharm_stock_drug` FOREIGN KEY (`drug`) REFERENCES `pharm_drug` (`id`),
+            CONSTRAINT `pharm_stock_stockcenter_fkey` FOREIGN KEY (`stockcenter`) REFERENCES `pharm_stockcenter` (`id`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_packageddrugs` (
+            `id` int(11) NOT NULL,
+            `amount` int(11) DEFAULT NULL,
+            `stock` int(11) NOT NULL,
+            `parentpackage` int(11) NOT NULL,
+            `modified` char(1) DEFAULT NULL,
+            `packageddrugsindex` int(11) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `pharm_package_parent` (`parentpackage`),
+            CONSTRAINT `pharm_package_parent` FOREIGN KEY (`parentpackage`) REFERENCES `pharm_package` (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_pillcount` (
+            `id` int(11) NOT NULL,
+            `accum` int(11) NOT NULL,
+            `previouspackage` int(11) NOT NULL,
+            `dateofcount` datetime NOT NULL,
+            `drug` int(11) NOT NULL,
+            PRIMARY KEY (`id`),
+            KEY `pharm_previouspackage_fkey` (`previouspackage`),
+            KEY `pharm_drug_fkey2` (`drug`),
+            CONSTRAINT `pharm_drug_fkey2` FOREIGN KEY (`drug`) REFERENCES `pharm_drug` (`id`),
+            CONSTRAINT `pharm_previouspackage_fkey` FOREIGN KEY (`previouspackage`) REFERENCES `pharm_package` (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_stocklevel` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `batch` int(11) NOT NULL,
+            `fullcontainersremaining` int(11) DEFAULT NULL,
+            `loosepillsremaining` int(11) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            UNIQUE KEY `pharm_unique_batch` (`batch`),
+            CONSTRAINT `pharm_batch_fkey` FOREIGN KEY (`batch`) REFERENCES `pharm_stock` (`id`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_accumulateddrugs` (
+            `id` int(11) NOT NULL,
+            `withpackage` int(11) NOT NULL,
+            `pillcount` int(11) NOT NULL,
+            PRIMARY KEY (`id`),
+            KEY `pharm_pillcount_fkey` (`pillcount`),
+            CONSTRAINT `pharm_pillcount_fkey` FOREIGN KEY (`pillcount`) REFERENCES `pharm_pillcount` (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_packagedruginfotmp` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `amountpertime` varchar(255) DEFAULT NULL,
+            `batchnumber` varchar(255) DEFAULT NULL,
+            `clinic` varchar(255) DEFAULT NULL,
+            `dispensedate` datetime DEFAULT NULL,
+            `dispensedqty` int(11) DEFAULT NULL,
+            `drugname` varchar(255) DEFAULT NULL,
+            `expirydate` datetime DEFAULT NULL,
+            `formlanguage1` varchar(255) DEFAULT NULL,
+            `formlanguage2` varchar(255) DEFAULT NULL,
+            `formlanguage3` varchar(255) DEFAULT NULL,
+            `notes` varchar(255) DEFAULT NULL,
+            `packageindex` int(11) DEFAULT NULL,
+            `patientid` varchar(255) DEFAULT NULL,
+            `patientfirstname` varchar(255) DEFAULT NULL,
+            `specialinstructions1` varchar(255) DEFAULT NULL,
+            `specialinstructions2` varchar(255) DEFAULT NULL,
+            `stockid` int(11) DEFAULT NULL,
+            `timesperday` int(11) DEFAULT NULL,
+            `cluser` int(11) NOT NULL,
+            `weekssupply` int(11) DEFAULT NULL,
+            `sidetreatment` tinyint(1) DEFAULT NULL,
+            `packageddrug` int(11) NOT NULL,
+            `invalid` tinyint(1) DEFAULT NULL,
+            `qtyinhand` varchar(255) DEFAULT NULL,
+            `summaryqtyinhand` varchar(255) DEFAULT NULL,
+            `qtyinlastbatch` varchar(255) DEFAULT NULL,
+            `patientlastname` varchar(255) DEFAULT NULL,
+            `prescriptionduration` int(11) DEFAULT NULL,
+            `dateexpectedstring` varchar(255) DEFAULT NULL,
+            `senttoekapa` tinyint(1) DEFAULT NULL,
+            `packageid` varchar(255) DEFAULT NULL,
+            `firstbatchinprintjob` tinyint(1) DEFAULT '0',
+            `numberoflabels` int(11) DEFAULT '0',
+            `dispensedforlaterpickup` tinyint(1) DEFAULT '0',
+            PRIMARY KEY (`id`),
+            KEY `pharm_packageddrugtmp_packageddrug` (`packageddrug`),
+            KEY `pharm_packageddrugtmp_cluser` (`cluser`),
+            CONSTRAINT `pharm_packageddrugtmp_cluser` FOREIGN KEY (`cluser`) REFERENCES `pharm_users` (`id`),
+            CONSTRAINT `pharm_packageddrugtmp_packageddrug` FOREIGN KEY (`packageddrug`) REFERENCES `pharm_packageddrugs` (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_patient` (
+            `id` int(11) NOT NULL,
+            `accountstatus` tinyint(1) DEFAULT NULL,
+            `cellphone` varchar(255) DEFAULT NULL,
+            `dateofbirth` datetime DEFAULT NULL,
+            `clinic` int(11) NOT NULL,
+            `firstnames` varchar(255) DEFAULT NULL,
+            `homephone` varchar(255) DEFAULT NULL,
+            `lastname` varchar(255) DEFAULT NULL,
+            `modified` char(1) DEFAULT NULL,
+            `patientid` varchar(255) NOT NULL,
+            `province` varchar(255) DEFAULT NULL,
+            `sex` char(1) DEFAULT NULL,
+            `workphone` varchar(255) DEFAULT NULL,
+            `address1` varchar(255) DEFAULT NULL,
+            `address2` varchar(255) DEFAULT NULL,
+            `address3` varchar(255) DEFAULT NULL,
+            `nextofkinname` varchar(255) DEFAULT NULL,
+            `nextofkinphone` varchar(255) DEFAULT NULL,
+            `race` varchar(255) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `pharm_patient_clinic` (`clinic`),
+            CONSTRAINT `pharm_patient_clinic` FOREIGN KEY (`clinic`) REFERENCES `pharm_clinic` (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_alternatepatientidentifier` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `identifier` varchar(255) DEFAULT NULL,
+            `patient` int(11) DEFAULT NULL,
+            `datechanged` datetime DEFAULT NULL,
+            `masterpatientid` tinyint(1) DEFAULT NULL,
+            `type_id` int(11) NOT NULL,
+            PRIMARY KEY (`id`),
+            KEY `pharm_alternateid_patient` (`patient`),
+            CONSTRAINT `pharm_alternateid_patient` FOREIGN KEY (`patient`) REFERENCES `pharm_patient` (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_appointment` (
+            `id` int(11) NOT NULL,
+            `appointmentdate` datetime DEFAULT NULL,
+            `patient` int(11) DEFAULT NULL,
+            `visitdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            PRIMARY KEY (`id`),
+            KEY `pharm_appointment_fkey` (`patient`),
+            CONSTRAINT `pharm_appointment_fkey` FOREIGN KEY (`patient`) REFERENCES `pharm_patient` (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_episode` (
+            `id` int(11) NOT NULL,
+            `startdate` datetime NOT NULL,
+            `stopdate` datetime DEFAULT NULL,
+            `startreason` varchar(255) DEFAULT NULL,
+            `stopreason` varchar(255) DEFAULT NULL,
+            `startnotes` varchar(255) DEFAULT NULL,
+            `stopnotes` varchar(255) DEFAULT NULL,
+            `patient` int(11) DEFAULT NULL,
+            `index` int(11) DEFAULT NULL,
+            `clinic` int(11) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `pharm_fk_episode_patient` (`patient`),
+            KEY `pharm_episode_clinic_fkey` (`clinic`),
+            CONSTRAINT `pharm_episode_clinic_fkey` FOREIGN KEY (`clinic`) REFERENCES `pharm_clinic` (`id`),
+            CONSTRAINT `pharm_fk_episode_patient` FOREIGN KEY (`patient`) REFERENCES `pharm_patient` (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_patientattribute` (
+            `id` int(11) NOT NULL,
+            `value` varchar(255) DEFAULT NULL,
+            `patient` int(11) DEFAULT NULL,
+            `type_id` int(11) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `pharm_patientattribute_attributetype` (`type_id`),
+            KEY `pharm_patientattribute_patient` (`patient`),
+            CONSTRAINT `pharm_patientattribute_patient` FOREIGN KEY (`patient`) REFERENCES `pharm_patient` (`id`),
+            CONSTRAINT `pharm_patientattribute_attributetype` FOREIGN KEY (`type_id`) REFERENCES `pharm_attributetype` (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_patientidentifier` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `value` varchar(255) NOT NULL,
+            `patient_id` int(11) NOT NULL,
+            `type_id` int(11) NOT NULL,
+            PRIMARY KEY (`id`),
+            UNIQUE KEY `pharm_unique_identifier_type` (`type_id`,`value`),
+            KEY `pharm_patientidentifier_patient` (`patient_id`),
+            CONSTRAINT `pharm_patientidentifier_identifiertype` FOREIGN KEY (`type_id`) REFERENCES `pharm_identifiertype` (`id`),
+            CONSTRAINT `pharm_patientidentifier_patient` FOREIGN KEY (`patient_id`) REFERENCES `pharm_patient` (`id`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_pregnancy` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `confirmdate` datetime DEFAULT NULL,
+            `enddate` datetime DEFAULT NULL,
+            `patient` int(11) NOT NULL,
+            `modified` char(1) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `pharm_pregnancy_patient` (`patient`),
+            CONSTRAINT `pharm_pregnancy_patient` FOREIGN KEY (`patient`) REFERENCES `pharm_patient` (`id`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_prescription` (
+            `id` int(11) NOT NULL,
+            `clinicalstage` int(11) DEFAULT NULL,
+            `current` char(1) DEFAULT NULL,
+            `date` datetime DEFAULT NULL,
+            `doctor` int(11) DEFAULT NULL,
+            `duration` int(11) DEFAULT NULL,
+            `modified` char(1) DEFAULT NULL,
+            `patient` int(11) NOT NULL,
+            `prescriptionid` varchar(255) DEFAULT NULL,
+            `weight` double DEFAULT NULL,
+            `reasonforupdate` varchar(255) DEFAULT NULL,
+            `notes` varchar(255) DEFAULT NULL,
+            `enddate` datetime DEFAULT NULL,
+            `drugtypes` varchar(20) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `pharm_prescription_doctor` (`doctor`),
+            KEY `pharm_prescription_patient` (`patient`),
+            CONSTRAINT `pharm_prescription_doctor` FOREIGN KEY (`doctor`) REFERENCES `pharm_doctor` (`id`),
+            CONSTRAINT `pharm_prescription_patient` FOREIGN KEY (`patient`) REFERENCES `pharm_patient` (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_studyparticipant` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `studygroup` varchar(255) NOT NULL,
+            `startdate` date DEFAULT NULL,
+            `enddate` date DEFAULT NULL,
+            `patient` int(11) NOT NULL,
+            `study` int(11) NOT NULL,
+            `randomizationid` varchar(40) DEFAULT NULL,
+            `alternatecellphone` varchar(20) DEFAULT NULL,
+            `network` varchar(40) NOT NULL,
+            `language` varchar(50) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `pharm_studyparticipant_patient_fkey` (`patient`),
+            KEY `pharm_studyparticipant_study_fkey` (`study`),
+            CONSTRAINT `pharm_studyparticipant_patient_fkey` FOREIGN KEY (`patient`) REFERENCES `pharm_patient` (`id`),
+            CONSTRAINT `pharm_studyparticipant_study_fkey` FOREIGN KEY (`study`) REFERENCES `pharm_study` (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE `pharm_prescribeddrugs` (
+            `id` int(11) NOT NULL,
+            `amtpertime` double DEFAULT NULL,
+            `drug` int(11) DEFAULT NULL,
+            `prescription` int(11) DEFAULT NULL,
+            `timesperday` int(11) DEFAULT NULL,
+            `modified` char(1) DEFAULT NULL,
+            `prescribeddrugsindex` int(11) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `pharm_prescribed_prescription` (`prescription`),
+            KEY `pharm_prescribed_drug` (`drug`),
+            CONSTRAINT `pharm_prescribed_drug` FOREIGN KEY (`drug`) REFERENCES `pharm_drug` (`id`),
+            CONSTRAINT `pharm_prescribed_prescription` FOREIGN KEY (`prescription`) REFERENCES `pharm_prescription` (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>    
 </sqldiff>

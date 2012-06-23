@@ -1,7 +1,6 @@
 package org.openmrs.module.pharm.db.hibernate;
 
 import java.util.List;
-
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;

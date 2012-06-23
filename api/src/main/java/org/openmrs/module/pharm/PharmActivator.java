@@ -14,12 +14,26 @@ package org.openmrs.module.pharm;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.module.Activator;
+import org.openmrs.module.BaseModuleActivator;
+import org.openmrs.module.ModuleActivator;
 
 /**
  * This class contains the logic that is run every time this module is either
  * started or shutdown
+ *
+ * A module Activator class MUST implement the interface
+ * org.openmrs.module.ModuleActivator. Additionally, there is an abstract class
+ * org.openmrs.module.BaseModuleActivator that is optionally available as a
+ * default implementation and "buffer" against changes. It is recommended to
+ * extend the abstract class in your module for "forward compatibility" sake.
+ * These are available in version 1.7.0 and later. If you need your module to
+ * support earlier versions up to 1.6.x, your activator class should implement
+ * the deprecated org.openmrs.module.Activator which has only 2 (two) methods.
+ * The class org.openmrs.module.ModuleActivator gives more control to the
+ * developer with its 6 (six) methods and so is preferred over the older and
+ * simpler Activator interface.
  */
-public class PharmActivator implements Activator {
+public class PharmActivator extends BaseModuleActivator implements Activator, ModuleActivator {
 
     private Log log = LogFactory.getLog(this.getClass());
 

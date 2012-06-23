@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module configVersion="1.2">	
+    <!-- Base Module Properties -->
+    <id>pharm</id>
+    <name>Pharm Module</name>
+    <version>0.1</version>
+    <package>org.openmrs.module.pharm</package>
+    <author>Diego Dayan</author>
+    <description>Parent project for Pharm Module</description>
+    <activator>org.openmrs.module.pharm.PharmActivator</activator>	
+    <!-- <updateURL>https://modules.openmrs.org/modules/download/@MODULE_ID@/update.rdf</updateURL> -->
+    <!-- /Base Module Properties -->
+    <!-- Added by Diego Dayan. Tell OpenMRS that this module is compatible
+        with both 1.8.* and 1.9.* -->
+    <require_version>1.8. - 1.9.</require_version>
+    <!-- Is this OpenMRS Database version? -->
+    <require_database_version>1.0.0</require_database_version>	
+    <!-- Extensions -->
+    <extension>
+        <point>org.openmrs.admin.list</point>
+        <class>org.openmrs.module.pharm.extension.html.AdminList</class>
+    </extension>
+    <extension>
+        <point>org.openmrs.patientDashboardTab</point>
+        <class>org.openmrs.module.pharm.extension.html.ExamplePatientDashboardTab</class>
+    </extension>
+    <extension>
+        <point>org.openmrs.patientDashboardTab</point>
+        <class>org.openmrs.module.pharm.extension.html.PatientNotesDashboardTabExt</class>
+    </extension>        
+    <!-- Extensions added by Diego Dayan
+        This adds a tab in the patient dashboard -->
+    <extension>
+        <point>org.openmrs.patientDashboardTab</point>
+        <class>org.openmrs.module.pharm.extension.html.PatientPharmDrugsDashboardTabExt</class>
+    </extension>
+    <!-- End of extensions added by Diego Dayan -->
+
+    <!-- The hibernate mapping file stored in /metadata/Note.hbm.xml and in the omod when packaged        
+        You should put them separated by spaces, like:
+        <mappingFiles>Class1.hbm.xml Class2.hbm.xml ClassN.hbm.xml</mappingFiles>
+    -->
+    <mappingFiles>
+        Note.hbm.xml
+        PharmDrug.hbm.xml        
+        iDart.hbm.xml
+        AdherenceRecordTmp.hbm.xml        
+    </mappingFiles>	
+        
+    <!-- These properties will end up in the database
+        In the table global_property
+    -->
+    <globalProperty>
+        <property>pharm.testproperty</property>
+        <defaultValue>6</defaultValue>
+        <description>
+            Maximum age of a child (exclusive).
+            Default: 6
+        </description>
+    </globalProperty>
+        
+    <!-- Required Global Properties 
+    <globalProperty>
+            <property>@MODULE_ID@.someProperty</property>
+            <defaultValue></defaultValue>
+            <description>
+                    A description of the global property goes here.  The description
+                    should explain enough for administrators to understand the purpose
+                    and possible values for the global property.
+            </description>
+    </globalProperty>
+    /Required Global Properties -->
+
+	<!-- AOP
+	<advice>
+		<point>org.openmrs.api.FormService</point>
+		<class>@MODULE_PACKAGE@.advice.DuplicateFormAdvisor</class>
+	</advice>
+	 /AOP -->
+    <!-- Define custom privileges -->
+    <privilege>
+        <name>Pharm add prescription</name>
+        <description>Pharm add prescription</description>
+    </privilege>
+    <privilege>
+        <name>Pharm view prescription</name>
+        <description>Pharm add prescription</description>
+    </privilege>
+    <privilege>
+        <name>Pharm return prescription</name>
+        <description>Pharm add prescription</description>
+    </privilege>
+ 
+    <dwr>
+        <allow>
+            <create creator="new" javascript="DWRMyNotesService">
+                <param name="class" value="org.openmrs.module.pharm.web.controller.DWRMyNotesService"/>
+                <include method="getNotesForPatient"/>
+                <!-- Can include other methods from class, too -->
+            </create> 
+                <!-- The following conversion tells spring to generate javascript to be able to
+                save and retrieve Note objects from the jsp page
+                See http://directwebremoting.org/dwr/documentation/server/configuration/dwrxml/converters/bean.html
+                -->
+            <convert converter="bean" match="org.openmrs.module.pharm.Note">
+                <param name="exclude" value="patient"/>
+            </convert>            
+            <create creator="new" javascript="DWRMyPharmDrugsService">
+                <param name="class" value="org.openmrs.module.pharm.web.controller.DWRMyPharmDrugsService"/>
+                <!-- Can include any number of methods from the class -->
+                <include method="getPharmDrugsForPatient"/>
+                <include method="deletePharmDrugById"/>
+                <include method="createPharmDrugForPatient"/>
+            </create> 
+                <!-- The following conversion tells spring to generate javascript to be able to
+                    save and retrieve PharmDrug objects from the jsp page
+                    See http://directwebremoting.org/dwr/documentation/server/configuration/dwrxml/converters/bean.html
+                    -->
+            <convert converter="bean" match="org.openmrs.module.pharm.PharmDrug">
+                <param name="exclude" value="patient"/>
+            </convert>          
+            <create creator="new" javascript="DWRFindPatientBL">
+                <param name="class" value="org.openmrs.module.pharm.web.controller.DWRFindPatientBL"/>
+                <include method="findPatients"/>
+            </create>                        
+            <create creator="new" javascript="DWRSaveNoteBL">
+                <param name="class" value="org.openmrs.module.pharm.web.controller.DWRSaveNoteBL"/>
+                <include method="saveNoteForPatient"/>
+            </create>         
+        </allow>
+        <signatures>
+			<![CDATA[
+			import org.openmrs.module.pharm.web.DWRMyNotesService;
+			DWRMyNotesService.getNotesForPatient(String patientName);
+			]]>
+
+			<![CDATA[
+			import org.openmrs.module.pharm.web.DWRMyPharmDrugsService;
+			DWRMyPharmDrugsService.getPharmDrugsForPatient(String patientName);
+			]]>
+                        
+			<![CDATA[
+			import org.openmrs.module.pharm.web.controller.DWRFindPatientBL;
+			DWRFindPatientBL.findPatients(String searchValue, boolean includeVoided);
+			]]>   
+                        
+			<![CDATA[
+			import org.openmrs.module.pharm.web.controller.DWRSaveNoteBL;
+			DWRSaveNoteBL.saveNoteForPatient(String patientId, String title, String text);
+			]]>         
+        </signatures>
+    </dwr>	
+	<!-- Servlets -->
+	<!-- Accessed through the url /pageContext()/moduleServlet/<moduleId>/<servlet-name> 
+	<servlet>
+		<servlet-name>formDownload</servlet-name>
+		<servlet-class>@MODULE_PACKAGE@.web.FormDownloadServlet</servlet-class>
+	</servlet>
+	-->
+	<!-- /Servlets -->
+        
+    <!-- Internationalization -->
+    <!-- All message codes should start with @MODULE_ID@.* -->
+    <messages>
+        <lang>en</lang>
+        <file>messages.properties</file>
+    </messages>
+    <messages>
+        <lang>fr</lang>
+        <file>messages_fr.properties</file>
+    </messages>
+    <messages>
+        <lang>es</lang>
+        <file>messages_es.properties</file>
+    </messages>
+    <!-- /Internationalization -->	
+</module>

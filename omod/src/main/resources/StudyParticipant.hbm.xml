@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<!-- This is the hibernate mapping file for our Note.java object.  This maps the object properties to the db columns. -->
+<!-- THIS FILE MUST BE REFERENCED FROM config.xml AS WELL -->
+<!-- See the /metadata/sqldiff.xml file for creating the table in the users database on startup -->
+<hibernate-mapping package="org.openmrs.module.pharm">
+    <class name="StudyParticipant" table="pharm_studyparticipant">
+        <!-- 
+            CREATE TABLE `pharm_studyparticipant` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `studygroup` varchar(255) NOT NULL,
+            `startdate` date DEFAULT NULL,
+            `enddate` date DEFAULT NULL,
+            `patient` int(11) NOT NULL,
+            `study` int(11) NOT NULL,
+            `randomizationid` varchar(40) DEFAULT NULL,
+            `alternatecellphone` varchar(20) DEFAULT NULL,
+            `network` varchar(40) NOT NULL,
+            `language` varchar(50) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `pharm_studyparticipant_patient_fkey` (`patient`),
+            KEY `pharm_studyparticipant_study_fkey` (`study`),
+            CONSTRAINT `pharm_studyparticipant_patient_fkey` FOREIGN KEY (`patient`) REFERENCES `pharm_patient` (`id`),
+            CONSTRAINT `pharm_studyparticipant_study_fkey` FOREIGN KEY (`study`) REFERENCES `pharm_study` (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        -->
+        <id name="id" type="int" column="id" unsaved-value="0">
+            <generator class="native" />
+        </id>
+        <property name="studyGroup" type="java.lang.String" column="studygroup" not-null="true" length="255" />
+        <property name="startDate" type="java.util.Date" column="startdate" not-null="false" />
+        <property name="endDate" type="java.util.Date" column="enddate" not-null="false" />
+        <property name="patient" type="int" column="patient" not-null="false" />
+        <property name="study" type="int" column="study" not-null="false" />
+        <property name="randomizationId" type="java.lang.String" column="randomizationid" not-null="false" length="40" />	
+        <property name="alternateCellphone" type="java.lang.String" column="alternatecellphone" not-null="false" length="255" />	
+        <property name="network" type="java.lang.String" column="network" not-null="false" length="40" />
+        <property name="language" type="java.lang.String" column="language" not-null="false" length="50" />	
+    </class>
+</hibernate-mapping>

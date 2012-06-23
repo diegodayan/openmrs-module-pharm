@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<!-- This is the hibernate mapping file for our Note.java object.  This maps the object properties to the db columns. -->
+<!-- THIS FILE MUST BE REFERENCED FROM config.xml AS WELL -->
+<!-- See the /metadata/sqldiff.xml file for creating the table in the users database on startup -->
+<hibernate-mapping package="org.openmrs.module.pharm">
+    <class name="AdherenceRecordTmp" table="pharm_adherencerecordtmp">
+        <!-- 
+            CREATE TABLE `pharm_adherencerecordtmp` (
+                `id` int(4) NOT NULL AUTO_INCREMENT,
+                `adherencereason` varchar(255) DEFAULT NULL,
+                `countdate` datetime DEFAULT NULL,
+                `dayscarriedover` int(11) DEFAULT NULL,
+                `daysinhand` int(11) DEFAULT NULL,
+                `dayssincevisit` int(11) DEFAULT NULL,
+                `dayssupplied` int(11) DEFAULT NULL,
+                `pawcno` varchar(255) DEFAULT NULL,
+                `pillcountid` int(11) DEFAULT NULL,
+                `cluser` varchar(255) DEFAULT NULL,
+                `invalid` tinyint(1) DEFAULT NULL,
+                PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8
+        -->
+        <id name="id" type="int" column="id" unsaved-value="0">
+            <generator class="native" />
+        </id>
+        <property name="adherenceReason" type="java.lang.String" column="adherencereason" not-null="false" length="255" />
+        <property name="pawcno" type="java.lang.String" column="pawcno" not-null="false" length="255" />	
+        <property name="cluser" type="java.lang.String" column="cluser" not-null="false" length="255" />	
+        <property name="countDate" type="java.util.Date" column="countdate" not-null="false" length="19" />
+        <property name="daysCarriedOver" type="int" column="dayscarriedover" not-null="false" />	
+        <property name="daysInHand" type="int" column="daysinhand" not-null="false" />
+        <property name="daysSinceVisit" type="int" column="dayssincevisit" not-null="false" />	
+        <property name="daysSupplied" type="int" column="dayssupplied" not-null="false" />	
+        <property name="pillCountId" type="int" column="pillcountid" not-null="false" />	
+        <property name="invalid" type="int" column="invalid" not-null="false" />
+    </class>
+</hibernate-mapping>

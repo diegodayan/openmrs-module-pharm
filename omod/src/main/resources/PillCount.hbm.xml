@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<!-- This is the hibernate mapping file for our Note.java object.  This maps the object properties to the db columns. -->
+<!-- THIS FILE MUST BE REFERENCED FROM config.xml AS WELL -->
+<!-- See the /metadata/sqldiff.xml file for creating the table in the users database on startup -->
+<hibernate-mapping package="org.openmrs.module.pharm">
+    <class name="PillCount" table="pharm_pillcount">
+        <!-- 
+            CREATE TABLE `pharm_pillcount` (
+            `id` int(11) NOT NULL,
+            `accum` int(11) NOT NULL,
+            `previouspackage` int(11) NOT NULL,
+            `dateofcount` datetime NOT NULL,
+            `drug` int(11) NOT NULL,
+            PRIMARY KEY (`id`),
+            KEY `pharm_previouspackage_fkey` (`previouspackage`),
+            KEY `pharm_drug_fkey2` (`drug`),
+            CONSTRAINT `pharm_drug_fkey2` FOREIGN KEY (`drug`) REFERENCES `pharm_drug` (`id`),
+            CONSTRAINT `pharm_previouspackage_fkey` FOREIGN KEY (`previouspackage`) REFERENCES `pharm_package` (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        -->
+        <id name="id" type="int" column="id" unsaved-value="0">
+            <generator class="native" />
+        </id>
+        <property name="accum" type="int" column="accum" not-null="false" not-null="false" />
+        <property name="previousPackage" type="int" column="previouspackage" not-null="false" />
+        <property name="drug" type="int" column="drug" not-null="false" />	
+        <property name="dateOfCount" type="java.util.Date" column="dateofcount" not-null="false" />	
+    </class>
+</hibernate-mapping>

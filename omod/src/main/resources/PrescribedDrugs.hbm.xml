@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<!-- This is the hibernate mapping file for our Note.java object.  This maps the object properties to the db columns. -->
+<!-- THIS FILE MUST BE REFERENCED FROM config.xml AS WELL -->
+<!-- See the /metadata/sqldiff.xml file for creating the table in the users database on startup -->
+<hibernate-mapping package="org.openmrs.module.pharm">
+    <class name="PrescribedDrugs" table="pharm_prescribeddrugs">
+        <!-- 
+            CREATE TABLE `pharm_prescribeddrugs` (
+            `id` int(11) NOT NULL,
+            `amtpertime` double DEFAULT NULL,
+            `drug` int(11) DEFAULT NULL,
+            `prescription` int(11) DEFAULT NULL,
+            `timesperday` int(11) DEFAULT NULL,
+            `modified` char(1) DEFAULT NULL,
+            `prescribeddrugsindex` int(11) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `pharm_prescribed_prescription` (`prescription`),
+            KEY `pharm_prescribed_drug` (`drug`),
+            CONSTRAINT `pharm_prescribed_drug` FOREIGN KEY (`drug`) REFERENCES `pharm_drug` (`id`),
+            CONSTRAINT `pharm_prescribed_prescription` FOREIGN KEY (`prescription`) REFERENCES `pharm_prescription` (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        -->
+        <id name="id" type="int" column="id" unsaved-value="0">
+            <generator class="native" />
+        </id>
+        <property name="amtPerTime" type="double" column="amtpertime" not-null="false" />
+        <property name="drug" type="int" column="drug" not-null="false" />	
+        <property name="prescription" type="int" column="prescription" not-null="false" />	
+        <property name="timesPerDay" type="int" column="timesperday" not-null="false" />
+        <property name="modified" type="java.lang.String" column="modified" not-null="false" length="255" />	
+        <property name="prescribedDrugsIndex" type="int" column="prescribeddrugsindex" not-null="false" />
+    </class>
+</hibernate-mapping>

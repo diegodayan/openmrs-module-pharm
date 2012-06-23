@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<!-- This is the hibernate mapping file for our Note.java object.  This maps the object properties to the db columns. -->
+<!-- THIS FILE MUST BE REFERENCED FROM config.xml AS WELL -->
+<!-- See the /metadata/sqldiff.xml file for creating the table in the users database on startup -->
+<hibernate-mapping package="org.openmrs.module.pharm">
+    <class name="StockAdjustment" table="pharm_stockadjustment">
+        <!-- 
+            CREATE TABLE `pharm_stockadjustment` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `capturedate` datetime DEFAULT NULL,
+            `stock` int(11) NOT NULL,
+            `notes` varchar(255) DEFAULT NULL,
+            `stocktake` int(11) DEFAULT NULL,
+            `stockcount` int(11) DEFAULT NULL,
+            `adjustedvalue` int(11) DEFAULT NULL,
+            `finalised` tinyint(1) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `pharm_stocktake_fkey` (`stocktake`),
+            CONSTRAINT `pharm_stocktake_fkey` FOREIGN KEY (`stocktake`) REFERENCES `pharm_stocktake` (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        -->
+        <id name="id" type="int" column="id" unsaved-value="0">
+            <generator class="native" />
+        </id>
+        <property name="captureDate" type="java.util.Date" column="capturedate" not-null="false" />
+        <property name="stock" type="int" column="stock" not-null="true" />
+        <property name="notes" type="java.lang.String" column="notes" not-null="false" length="255" />
+        <property name="stockTake" type="int" column="stocktake" not-null="false" />
+        <property name="stockCount" type="int" column="stockcount" not-null="false" />
+        <property name="adjustedValue" type="int" column="adjustedvalue" not-null="false" />
+        <property name="finalised" type="int" column="finalised" not-null="false" />
+    </class>
+</hibernate-mapping>

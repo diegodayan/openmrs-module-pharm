@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<!-- This is the hibernate mapping file for our Note.java object.  This maps the object properties to the db columns. -->
+<!-- THIS FILE MUST BE REFERENCED FROM config.xml AS WELL -->
+<!-- See the /metadata/sqldiff.xml file for creating the table in the users database on startup -->
+<hibernate-mapping package="org.openmrs.module.pharm">
+    <class name="AdherenceRecordTmp" table="pharm_adherencerecordtmp">
+        <!-- 
+            CREATE TABLE `pharm_stock` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `drug` int(11) NOT NULL,
+            `batchnumber` varchar(255) DEFAULT NULL,
+            `datereceived` datetime DEFAULT NULL,
+            `stockcenter` int(11) NOT NULL,
+            `expirydate` datetime DEFAULT NULL,
+            `modified` char(1) DEFAULT NULL,
+            `shelfnumber` varchar(255) DEFAULT NULL,
+            `unitsreceived` int(11) DEFAULT NULL,
+            `manufacturer` varchar(255) DEFAULT NULL,
+            `hasunitsremaining` char(1) DEFAULT NULL,
+            `unitprice` decimal(10,2) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `pharm_stock_drug` (`drug`),
+            KEY `pharm_stock_stockcenter_fkey` (`stockcenter`),
+            CONSTRAINT `pharm_stock_drug` FOREIGN KEY (`drug`) REFERENCES `pharm_drug` (`id`),
+            CONSTRAINT `pharm_stock_stockcenter_fkey` FOREIGN KEY (`stockcenter`) REFERENCES `pharm_stockcenter` (`id`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+        -->
+        <id name="id" type="int" column="id" unsaved-value="0">
+            <generator class="native" />
+        </id>
+        <property name="drug" type="int" column="drug" not-null="false" />
+        <property name="batchNumber" type="java.lang.String" column="batchnumber" not-null="false" length="255" />
+        <property name="dateReceived" type="java.util.Date" column="datereceived" not-null="true" />
+        <property name="stockCenter" type="int" column="stockcenter" not-null="false" />
+        <property name="expiryDate" type="java.util.Date" column="expirydate" not-null="true" />
+        <property name="modified" type="java.lang.String" column="modified" not-null="false" length="1" />	
+        <property name="shelfNumber" type="java.lang.String" column="shelfnumber" not-null="false" length="255" />        
+        <property name="unitsReceived" type="int" column="unitsreceived" not-null="false" />	
+        <property name="manufacturer" type="java.lang.String" column="manufacturer" not-null="false" length="255" />
+        <property name="hasUnitsRemaining" type="java.lang.String" column="hasunitsremaining" not-null="false" length="1" />
+        <property name="unitPrice" type="double" column="unitprice" not-null="false" />	
+    </class>
+</hibernate-mapping>

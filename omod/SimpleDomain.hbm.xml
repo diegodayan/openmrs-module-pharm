@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<!-- This is the hibernate mapping file for our Note.java object.  This maps the object properties to the db columns. -->
+<!-- THIS FILE MUST BE REFERENCED FROM config.xml AS WELL -->
+<!-- See the /metadata/sqldiff.xml file for creating the table in the users database on startup -->
+<hibernate-mapping package="org.openmrs.module.pharm">
+    <class name="SimpleDomain" table="pharm_simpledomain">
+        <!-- 
+            CREATE TABLE `pharm_simpledomain` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `description` varchar(255) DEFAULT NULL,
+            `name` varchar(255) DEFAULT NULL,
+            `value` varchar(255) DEFAULT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8;
+        -->
+        <id name="id" type="int" column="id" unsaved-value="0">
+            <generator class="native" />
+        </id>
+        <property name="description" type="java.lang.String" column="description" not-null="false" length="255" />
+        <property name="name" type="java.lang.String" column="name" not-null="false" length="255" />	
+        <property name="value" type="java.lang.String" column="value" not-null="false" length="255" />	
+    </class>
+</hibernate-mapping>

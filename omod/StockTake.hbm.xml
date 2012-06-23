@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<!-- This is the hibernate mapping file for our Note.java object.  This maps the object properties to the db columns. -->
+<!-- THIS FILE MUST BE REFERENCED FROM config.xml AS WELL -->
+<!-- See the /metadata/sqldiff.xml file for creating the table in the users database on startup -->
+<hibernate-mapping package="org.openmrs.module.pharm">
+    <class name="StockTake" table="pharm_stocktake">
+        <!-- 
+            CREATE TABLE `pharm_stocktake` (
+            `id` int(4) NOT NULL AUTO_INCREMENT,
+            `enddate` datetime DEFAULT NULL,
+            `startdate` datetime DEFAULT NULL,
+            `stocktakenumber` varchar(255) DEFAULT NULL,
+            `open` tinyint(1) DEFAULT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        -->
+        <id name="id" type="int" column="id" unsaved-value="0">
+            <generator class="native" />
+        </id>
+        <property name="endDate" type="java.util.Date" column="enddate" not-null="false" />
+        <property name="startDate" type="java.util.Date" column="startdate" not-null="false" />
+        <property name="stockTakeNumber" type="java.lang.String" column="stocktakenumber" not-null="false" length="255" />
+        <property name="open" type="int" column="open" not-null="false" />
+    </class>
+</hibernate-mapping>

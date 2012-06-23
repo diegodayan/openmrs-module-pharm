@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<!-- This is the hibernate mapping file for our Note.java object.  This maps the object properties to the db columns. -->
+<!-- THIS FILE MUST BE REFERENCED FROM config.xml AS WELL -->
+<!-- See the /metadata/sqldiff.xml file for creating the table in the users database on startup -->
+<hibernate-mapping package="org.openmrs.module.pharm">
+    <class name="SequenceData" table="pharm_sequence_data">
+        <!-- 
+            CREATE TABLE `pharm_sequence_data` (
+            `sequence_name` varchar(100) NOT NULL,
+            `sequence_increment` int(11) unsigned NOT NULL DEFAULT '1',
+            `sequence_min_value` int(11) unsigned NOT NULL DEFAULT '1',
+            `sequence_max_value` bigint(20) unsigned NOT NULL DEFAULT '18446744073709551615',
+            `sequence_cur_value` bigint(20) unsigned DEFAULT '1',
+            `sequence_cycle` tinyint(1) NOT NULL DEFAULT '0',
+            PRIMARY KEY (`sequence_name`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        -->
+        <id name="sequenceName" type="java.lang.String" column="sequence_name" unsaved-value="0" length="100">
+            <generator class="native" />
+        </id>
+        <property name="sequenceIncrement" type="int" column="sequence_increment" not-null="false" />
+        <property name="sequenceMinValue" type="int" column="sequence_min_value" not-null="false" />
+        <property name="sequenceMaxValue" type="int" column="sequence_max_value" not-null="false" />
+        <property name="sequenceCurValue" type="int" column="sequence_cur_value" not-null="false" />
+        <property name="sequenceCycle" type="int" column="sequence_cycle" not-null="false" />
+    </class>
+</hibernate-mapping>
